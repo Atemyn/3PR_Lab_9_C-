@@ -15,7 +15,6 @@ int main()
 	cout << "Статические экземпляры: " << endl << endl;
 
 	firstStaticB.inputBuilding();
-	initBuilding(secondStaticB);
 
 	firstStaticB.addToBuilding(&secondStaticB);
 
@@ -30,7 +29,6 @@ int main()
 	cout << "Динамические экземпляры: " << endl << endl;
 
 	firstDynamicB->inputBuilding();
-	initBuilding(*secondDynamicB);
 
 	firstDynamicB->addToBuilding(secondDynamicB);
 
@@ -48,7 +46,6 @@ int main()
 	cout << "Динамический массив объектов: " << endl << endl;
 
 	firstDynamicArray->inputBuilding();
-	initBuilding(*(firstDynamicArray + 1));
 
 	firstDynamicArray->addToBuilding((firstDynamicArray + 1));
 	// Очистка памяти.
@@ -66,7 +63,6 @@ int main()
 	cout << "Массив динамических объектов: " << endl << endl;
 
 	firstArrayOfDyn[0]->inputBuilding();
-	initBuilding(*firstArrayOfDyn[1]);
 
 	firstArrayOfDyn[0]->addToBuilding(firstArrayOfDyn[1]);
 
@@ -92,7 +88,6 @@ int main()
 	cout << "Возвращение значения из функции через указатель и через ссылку: " << endl;
 
 	b1.inputBuilding();
-	initBuilding(b2);
 	// Вызов первого метода через указатель.
 	b1.exchangeWindowsOnBuildings(&b2);
 
@@ -113,38 +108,33 @@ int main()
 
 	/* Проверка условия с использованием this в функции addToBuilding. */
 	cout << "Проверка условия с использованием this в функции addToBuilding:" << endl;
-	b1.inputBuilding();
-	b1.addToBuilding(&b1);
+	Building* buildd = new Building;
+	buildd->inputBuilding();
+	buildd->addToBuilding(buildd);
 	/*.................................................................*/
-
-	/* Использование дружественной классу Building функции initBuilding. */
-	cout << "Использование дружественной классу Building функции Init:" << endl;
-	initBuilding(b1);
-	b1.getBuilding();
-	/*...................................................................*/
 
 	/* Проверка переопределенных операторов. */
 	cout << "Проверка переопределенных операторов:" << endl;
-	Building b3;
+	Building bRes, bFirst, bSecond;
 
 	b1.inputBuilding();
-	initBuilding(b2);
 
-	b3 = b1 + b2;
+	bRes = bFirst + bSecond;
 
-	b3.getBuilding();
+	bRes.getBuilding();
 
-	b1 = b3++;
-	b2 = ++b3;
+	bFirst = bRes++;
+	bSecond = ++bRes;
 
-	b1.getBuilding();
-	b2.getBuilding();
+	bFirst.getBuilding();
+	bSecond.getBuilding();
 	/*......................................*/
 
 	/* Использование статического метода. */
 	cout << "Использование статического метода:" << endl;
 	cout << "Общее число когда-либо построенных этой компанией зданий: " << Building::getCountOfBuildings() << endl;
 	/*....................................*/
+
 	cin.get();
 	return 0;
 }

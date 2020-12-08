@@ -77,11 +77,6 @@ public:
 		facade.getFacade();
 		cout << "Коэффициент устойчивости: " << stabilityFactor << endl << endl;
 	}
-	/* Функция по заданию свойств по умолчанию экземпляра класса Building. */ 
-	friend void initBuilding(Building& building)
-	{
-		building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
-	}
 	/* Функция по вводу с клавиатуры свойств для экземпляра класса Building */
 	void inputBuilding()
 	{
@@ -137,7 +132,7 @@ public:
 			else
 			{
 				cout << "Здание не смогло устоять и рухнуло!" << endl << endl << endl;
-				initBuilding(*this);
+				this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
 			}
 		}
 		else
@@ -179,7 +174,7 @@ public:
 		if (stabilityFactor < 1)
 		{
 			cout << "К сожалению, после совмещения двух зданий новое здание сразу же развалилось, так как его коэффициент устойчивости k = " << stabilityFactor << " меньше нуля." << endl << endl;
-			initBuilding(*this);
+			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
 		}
 		else
 		{
@@ -319,7 +314,7 @@ public:
 
 		if (resultB.stabilityFactor < 1)
 		{
-			initBuilding(resultB);
+			resultB.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
 		}
 		return resultB;
 	}
@@ -331,7 +326,7 @@ public:
 		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
 		if (building.stabilityFactor < 1)
 		{
-			initBuilding(building);
+			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
 		}
 
 		return building;
@@ -345,7 +340,7 @@ public:
 		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
 		if (building.stabilityFactor < 1)
 		{
-			initBuilding(building);
+			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
 		}
 
 		return result;
