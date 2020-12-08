@@ -67,6 +67,11 @@ public:
 		countOfBuildings++;
 	}
 
+	~Building()
+	{
+		countOfBuildings--;
+	}
+
 	/* ‘ункци€ по выводу свойств экземпл€ра класса Building. */
 	void getBuilding()
 	{
