@@ -77,7 +77,7 @@ public:
 		facade.getFacade();
 		cout << "Коэффициент устойчивости: " << stabilityFactor << endl << endl;
 	}
-	/* Функция по заданию свойств по умолчанию экземпляра класса Building. */
+	/* Функция по заданию свойств по умолчанию экземпляра класса Building. */ 
 	friend void initBuilding(Building& building)
 	{
 		building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
