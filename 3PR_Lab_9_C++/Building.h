@@ -27,14 +27,14 @@ private:
 	// Коэффициент устойчивости.
 	float stabilityFactor;
 	/* Функция по установке переданных значений в свойства экземпляра класса Building. */
-	void setBuilding(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, int floorAmount, float stabilityFactor, int windowsAmount, int openedWindowsAmount)
+	void setBuilding(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
 	{
 		this->typeOfBuilding = typeOfBuilding;
 		this->sideLength = sideLength;
 		this->basementHeight = basementHeight;
 		this->floorHeight = floorHeight;
 		this->floorAmount = floorAmount;
-		this->stabilityFactor = stabilityFactor;
+		this->stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
 		this->facade.setFacade(windowsAmount, openedWindowsAmount);
 	}
 public:
@@ -47,19 +47,23 @@ public:
 	// Конструктор без параметров.
 	Building()
 	{
-		this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
+		this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		countOfBuildings++;
 	}
 	// Конструктор с 1 параметром.
 	Building(float sideLength)
 	{
-		this->setBuilding("Жилое здание", sideLength, 1.0, 1.0, 1, 1.0, 0, 0);
+		this->setBuilding("Жилое здание", sideLength, 1.0, 1.0, 1, 0, 0);
+		if (stabilityFactor < 1)
+			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		countOfBuildings++;
 	}
 	// Конструктор со всеми параметрами.
-	Building(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, unsigned floorAmount, float stabilityFactor, int windowsAmount, int openedWindowsAmount)
+	Building(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
 	{
-		this->setBuilding(typeOfBuilding, sideLength, basementHeight, floorHeight, floorAmount, stabilityFactor, windowsAmount, openedWindowsAmount);
+		this->setBuilding(typeOfBuilding, sideLength, basementHeight, floorHeight, floorAmount, windowsAmount, openedWindowsAmount);
+		if (stabilityFactor < 1)
+			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		countOfBuildings++;
 	}
 
@@ -132,7 +136,7 @@ public:
 			else
 			{
 				cout << "Здание не смогло устоять и рухнуло!" << endl << endl << endl;
-				this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
+				this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 			}
 		}
 		else
@@ -174,7 +178,7 @@ public:
 		if (stabilityFactor < 1)
 		{
 			cout << "К сожалению, после совмещения двух зданий новое здание сразу же развалилось, так как его коэффициент устойчивости k = " << stabilityFactor << " меньше нуля." << endl << endl;
-			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
+			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 		else
 		{
@@ -314,7 +318,7 @@ public:
 
 		if (resultB.stabilityFactor < 1)
 		{
-			resultB.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
+			resultB.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 		return resultB;
 	}
@@ -326,7 +330,7 @@ public:
 		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
 		if (building.stabilityFactor < 1)
 		{
-			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
+			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 
 		return building;
@@ -340,7 +344,7 @@ public:
 		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
 		if (building.stabilityFactor < 1)
 		{
-			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0, 0, 0);
+			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 
 		return result;

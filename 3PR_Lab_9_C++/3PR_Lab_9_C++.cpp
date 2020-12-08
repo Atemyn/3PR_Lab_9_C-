@@ -107,7 +107,7 @@ int main()
 	/*................................................................*/
 
 	/* Проверка условия с использованием this в функции addToBuilding. */
-	cout << "Проверка условия с использованием this в функции addToBuilding:" << endl;
+	cout << "Проверка условия с использованием this в функции addToBuilding:" << endl << endl;
 	Building* buildd = new Building;
 	buildd->inputBuilding();
 	buildd->addToBuilding(buildd);
@@ -132,9 +132,23 @@ int main()
 
 	/* Использование статического метода. */
 	cout << "Использование статического метода:" << endl;
-	cout << "Общее число когда-либо построенных этой компанией зданий: " << Building::getCountOfBuildings() << endl;
+	cout << "Общее число когда-либо построенных этой компанией зданий: " << Building::getCountOfBuildings() << endl << endl;
 	/*....................................*/
 
+	/* Вызов конструкторов статическими объектами. */
+	cout << "Вызов конструкторов статическими объектами:" << endl << endl;
+	Building statB1, statB2(3), statB3((string)"Офисное здание", 5, 1, 2, 3, 5, 3);
+	statB1.getBuilding();
+	statB2.getBuilding();
+	statB3.getBuilding();
+	cout << "Вызов конструкторов динамическими объектами:" << endl << endl;
+	Building* dynB1 = new Building;
+	Building* dynB2 = new Building(3);
+	Building* dynB3 = new Building((string)"Офисное здание", 5, 1, 2, 3, 5, 3);
+	dynB1->getBuilding();
+	dynB2->getBuilding();
+	dynB3->getBuilding();
 	cin.get();
+	/*.............................................*/
 	return 0;
 }

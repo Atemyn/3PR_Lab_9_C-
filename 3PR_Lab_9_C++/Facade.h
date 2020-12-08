@@ -11,8 +11,16 @@ public:
 	// Функция по заданию приватных полей класса.
 	void setFacade(int windowsAmount, int openedWindowsAmount)
 	{
-		this->windowsAmount = windowsAmount;
-		this->openedWindowsAmount = openedWindowsAmount;
+		if (windowsAmount < openedWindowsAmount)
+		{
+			this->windowsAmount = 0;
+			this->openedWindowsAmount = 0;
+		}
+		else
+		{
+			this->windowsAmount = windowsAmount;
+			this->openedWindowsAmount = openedWindowsAmount;
+		}
 	}
 	// Функция, возвращающая значение поля windowsAmount.
 	int getWindowsAmount()
