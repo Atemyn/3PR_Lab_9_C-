@@ -151,9 +151,9 @@ int main()
 	cin.get();
 	cout << "Инициализация массива конструктором с одним параметром:" << endl << endl;
 	Building masB[3] = { 3, 5, 7 };
+	masB[0].getBuilding();
 	masB[1].getBuilding();
 	masB[2].getBuilding();
-	masB[3].getBuilding();
 	/*.............................................*/
 	return 0;
 }
