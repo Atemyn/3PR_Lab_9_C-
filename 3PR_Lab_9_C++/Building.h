@@ -29,7 +29,7 @@ private:
 	// Коэффициент устойчивости.
 	float stabilityFactor;
 	/* Функция по установке переданных значений в свойства экземпляра класса Building. */
-	void setBuilding(string typeOfBuilding, char * address, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
+	void setBuilding(string typeOfBuilding, char* address, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
 	{
 		this->typeOfBuilding = typeOfBuilding;
 		this->address = new char[30];
@@ -65,7 +65,7 @@ public:
 		countOfBuildings++;
 	}
 	// Конструктор со всеми параметрами.
-	Building(string typeOfBuilding, char *address, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
+	Building(string typeOfBuilding, char* address, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
 	{
 		char adr[] = "NONE";
 		this->setBuilding(typeOfBuilding, address, sideLength, basementHeight, floorHeight, floorAmount, windowsAmount, openedWindowsAmount);
@@ -74,7 +74,7 @@ public:
 		countOfBuildings++;
 	}
 
-	Building(Building &b)
+	Building(Building& b)
 	{
 		this->typeOfBuilding = b.typeOfBuilding;
 		address = new char[strlen(b.address + 1)];
@@ -387,6 +387,25 @@ public:
 		}
 
 		return result;
+	}
+
+	Building & operator=(Building& b)
+	{
+		if (this->address)
+			delete this->address;
+		this->address = NULL;
+		this->address = new char[strlen(b.address) + 1];
+
+		this->typeOfBuilding = b.typeOfBuilding;
+		strcpy(this->address, b.address);
+		this->sideLength = b.sideLength;
+		this->basementHeight = b.basementHeight;
+		this->floorHeight = b.floorHeight;
+		this->floorAmount = b.floorAmount;
+		this->stabilityFactor = b.stabilityFactor;
+		this->facade.setFacade(b.getWindowsAmount(), b.getOpenedWindowsAmount());
+
+		return *this;
 	}
 };
 

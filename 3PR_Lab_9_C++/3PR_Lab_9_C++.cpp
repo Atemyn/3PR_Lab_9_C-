@@ -113,23 +113,6 @@ int main()
 	buildd->addToBuilding(buildd);
 	/*.................................................................*/
 
-	/* Проверка переопределенных операторов. */
-	cout << "Проверка переопределенных операторов:" << endl;
-	Building bRes, bFirst, bSecond;
-
-	b1.inputBuilding();
-
-	bRes = bFirst + bSecond;
-
-	bRes.getBuilding();
-
-	bFirst = bRes++;
-	bSecond = ++bRes;
-
-	bFirst.getBuilding();
-	bSecond.getBuilding();
-	/*......................................*/
-
 	/* Использование статического метода. */
 	cout << "Использование статического метода:" << endl;
 	cout << "Общее число когда-либо построенных этой компанией зданий: " << Building::getCountOfBuildings() << endl << endl;
@@ -165,5 +148,15 @@ int main()
 	build1.inputBuilding();
 	build2.getBuilding();
 	/*....................*/
+
+	/* Перегрузка оператора присваивания. */
+	cout << "Перегрузка оператора присваивания:" << endl << endl;
+	Building* b_1 = new Building((string)"Офисное здание", adr, 5, 1, 2, 3, 5, 3);
+	Building* b_2 = new Building((string)"Муниципальное здание", adr, 5, 1, 3, 5, 5, 5);
+	
+	*b_2 = *b_1;
+	b_1->inputBuilding();
+
+	b_2->getBuilding();
 	return 0;
 }
