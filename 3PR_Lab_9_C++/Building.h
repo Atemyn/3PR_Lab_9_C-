@@ -1,5 +1,6 @@
 #pragma once
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
@@ -14,6 +15,7 @@ private:
 	static int countOfBuildings;
 	// Тип здания.
 	string typeOfBuilding;
+	char* address;
 	// Длина стороны основания.
 	float sideLength;
 	// Высота фундамента.
@@ -27,9 +29,11 @@ private:
 	// Коэффициент устойчивости.
 	float stabilityFactor;
 	/* Функция по установке переданных значений в свойства экземпляра класса Building. */
-	void setBuilding(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
+	void setBuilding(string typeOfBuilding, char * address, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
 	{
 		this->typeOfBuilding = typeOfBuilding;
+		this->address = new char[30];
+		strcpy(this->address, address);
 		this->sideLength = sideLength;
 		this->basementHeight = basementHeight;
 		this->floorHeight = floorHeight;
@@ -47,24 +51,39 @@ public:
 	// Конструктор без параметров.
 	Building()
 	{
-		this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+		char adr[] = "NONE";
+		this->setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		countOfBuildings++;
 	}
 	// Конструктор с 1 параметром.
 	Building(float sideLength)
 	{
-		this->setBuilding("Жилое здание", sideLength, 1.0, 1.0, 1, 0, 0);
+		char adr[] = "NONE";
+		this->setBuilding("Жилое здание", adr, sideLength, 1.0, 1.0, 1, 0, 0);
 		if (stabilityFactor < 1)
-			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+			this->setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		countOfBuildings++;
 	}
 	// Конструктор со всеми параметрами.
-	Building(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
+	Building(string typeOfBuilding, char *address, float sideLength, float basementHeight, float floorHeight, int floorAmount, int windowsAmount, int openedWindowsAmount)
 	{
-		this->setBuilding(typeOfBuilding, sideLength, basementHeight, floorHeight, floorAmount, windowsAmount, openedWindowsAmount);
+		char adr[] = "NONE";
+		this->setBuilding(typeOfBuilding, address, sideLength, basementHeight, floorHeight, floorAmount, windowsAmount, openedWindowsAmount);
 		if (stabilityFactor < 1)
-			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+			this->setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		countOfBuildings++;
+	}
+
+	Building(Building &b)
+	{
+		this->typeOfBuilding = b.typeOfBuilding;
+		this->address = b.address;
+		this->sideLength = b.sideLength;
+		this->basementHeight = b.basementHeight;
+		this->floorHeight = b.floorHeight;
+		this->floorAmount = b.floorAmount;
+		this->stabilityFactor = b.stabilityFactor;
+		this->facade.setFacade(b.getWindowsAmount(), b.getOpenedWindowsAmount());
 	}
 
 	~Building()
@@ -79,6 +98,7 @@ public:
 		cout << "Название строительной компании: " << companyName << endl;
 		cout << "Общее количество зданий этой компании: " << countOfBuildings << endl;
 		cout << "Тип здания: " << typeOfBuilding << endl;
+		cout << "Адрес здания: " << address << endl;
 		cout << "Длина стороны основания: " << sideLength << endl;
 		cout << "Высота фундамента: " << basementHeight << endl;
 		cout << "Высота этажа: " << floorHeight << endl;
@@ -94,6 +114,14 @@ public:
 		cin >> typeOfBuilding;
 		cin.clear();
 		rewind(stdin);
+
+		cout << "Введите адрес вашего здания (в виде строки, не длиннее 30 символов): ";
+		while (!(cin >> address) || cin.get() != '\n' || strlen(address) > 30)
+		{
+			cout << "Неверный адреса. Попробуйте еще раз: ";
+			cin.clear();
+			rewind(stdin);
+		}
 
 		cout << "Введите длину стороны вашего здания: ";
 		while (!(cin >> sideLength) || cin.get() != '\n' || sideLength <= 0)
@@ -141,7 +169,8 @@ public:
 			else
 			{
 				cout << "Здание не смогло устоять и рухнуло!" << endl << endl << endl;
-				this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+				char adr[] = "NONE";
+				this->setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 			}
 		}
 		else
@@ -183,7 +212,8 @@ public:
 		if (stabilityFactor < 1)
 		{
 			cout << "К сожалению, после совмещения двух зданий новое здание сразу же развалилось, так как его коэффициент устойчивости k = " << stabilityFactor << " меньше нуля." << endl << endl;
-			this->setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+			char adr[] = "NONE";
+			this->setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 		else
 		{
@@ -323,7 +353,8 @@ public:
 
 		if (resultB.stabilityFactor < 1)
 		{
-			resultB.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+			char adr[] = "NONE";
+			resultB.setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 		return resultB;
 	}
@@ -335,7 +366,8 @@ public:
 		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
 		if (building.stabilityFactor < 1)
 		{
-			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+			char adr[] = "NONE";
+			building.setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 
 		return building;
@@ -349,7 +381,8 @@ public:
 		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
 		if (building.stabilityFactor < 1)
 		{
-			building.setBuilding("Жилое здание", 1.0, 1.0, 1.0, 1, 0, 0);
+			char adr[] = "NONE";
+			building.setBuilding("Жилое здание", adr, 1.0, 1.0, 1.0, 1, 0, 0);
 		}
 
 		return result;

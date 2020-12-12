@@ -137,14 +137,15 @@ int main()
 
 	/* Вызов конструкторов статическими и динамическими объектами, инициализация массива. */
 	cout << "Вызов конструкторов статическими объектами:" << endl << endl;
-	Building statB1, statB2(3), statB3((string)"Офисное здание", 5, 1, 2, 3, 5, 3);
+	char adr[] = "Пушкина, 11";
+	Building statB1, statB2(3), statB3((string)"Офисное здание", adr,  5, 1, 2, 3, 5, 3);
 	statB1.getBuilding();
 	statB2.getBuilding();
 	statB3.getBuilding();
 	cout << "Вызов конструкторов динамическими объектами:" << endl << endl;
 	Building* dynB1 = new Building;
 	Building* dynB2 = new Building(3);
-	Building* dynB3 = new Building((string)"Офисное здание", 5, 1, 2, 3, 5, 3);
+	Building* dynB3 = new Building((string)"Офисное здание", adr, 5, 1, 2, 3, 5, 3);
 	dynB1->getBuilding();
 	dynB2->getBuilding();
 	dynB3->getBuilding();
@@ -155,5 +156,14 @@ int main()
 	masB[1].getBuilding();
 	masB[2].getBuilding();
 	/*.............................................*/
+
+	/* Мелкое копирование. */
+	cout << "Мелкое копирование:" << endl << endl;
+	Building build1((string)"Офисное здание", adr, 5, 1, 2, 3, 5, 3);
+	Building build2 = build1;
+
+	build1.inputBuilding();
+	build2.getBuilding();
+	/*....................*/
 	return 0;
 }
