@@ -77,7 +77,8 @@ public:
 	Building(Building &b)
 	{
 		this->typeOfBuilding = b.typeOfBuilding;
-		this->address = b.address;
+		address = new char[strlen(b.address + 1)];
+		strcpy(this->address, b.address);
 		this->sideLength = b.sideLength;
 		this->basementHeight = b.basementHeight;
 		this->floorHeight = b.floorHeight;
